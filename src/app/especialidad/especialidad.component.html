@@ -1,0 +1,50 @@
+<app-menu></app-menu>
+<p-table [value]="especialidades" [tableStyle]="{'min-width': '60rem'}">
+  <ng-template pTemplate="caption">
+      <div class="flex align-items-center justify-content-between ">
+          Especialidades
+          <button pButton pRipple icon="pi pi-plus" class="p-button-success" (click)="showDialogCreate()"></button>
+      </div>
+  </ng-template>
+  <ng-template pTemplate="header">
+      <tr>
+          <th>N°</th>
+          <th>Especialidad</th>
+          <th>Estatus</th>
+          <th>Acciones</th>
+      </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-especialidad let-i="rowIndex" >
+      <tr>
+          <td>{{i+1}}</td>
+          <td>{{especialidad.nombre}}</td>
+          <td><p-tag [value]="especialidad.estado" [severity]="getSeverity(especialidad.estado)" /></td>
+          <td>
+            <button pButton pRipple type="button" icon="pi pi-pencil" class="p-button-rounded" (click)="showDialogEdit(especialidad.id)"></button>
+            <button pButton pRipple type="button" icon="pi pi-trash" class="p-button-rounded p-button-danger ml-1" (click)="deleteEspecialidad(especialidad.id)"></button>
+          </td>
+      </tr>
+  </ng-template>
+  <ng-template pTemplate="summary">
+      <div class="flex align-items-center justify-content-between">
+          En total hay {{especialidades ? especialidades.length : 0 }} especialidades.
+      </div>
+  </ng-template>
+</p-table>
+
+
+<p-dialog header="{{titulo}}" [modal]="true" [(visible)]="visible" [style]="{ width: '25rem' }">
+  <span class="p-text-secondary block mb-5">Update your information.</span>
+  <div class="flex align-items-center gap-3 mb-3">
+      <label for="nombres" class="font-semibold w-6rem">Nombre</label>
+      <input pInputText [(ngModel)]="especialidad.nombre" name="nombres" id="nombre" class="flex-auto" autocomplete="off"/>
+  </div>
+  <div class="flex align-items-center gap-3 mb-5">
+      <label for="apellidos" class="font-semibold w-6rem">Apellido</label>
+      <input pInputText [(ngModel)]="especialidad.estado" id="apellidos" class="flex-auto" autocomplete="off" />
+  </div>
+  <div class="flex justify-content-end gap-2">
+    <p-button label="Cancel" severity="secondary" (click)="visible = false" />
+    <p-button label="{{opc}}" (click)="opcion()" />
+  </div>
+</p-dialog>
